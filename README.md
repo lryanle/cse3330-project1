@@ -35,7 +35,7 @@ tickets.
 
 
 ## ER Diagram
-![ER Diagram](./ERDiagram.png)
+![ER Diagram](./ER_Diagram_updated.png)
 
 
 ## SQL Create Statements
@@ -44,13 +44,12 @@ tickets.
 ```sql
 CREATE TABLE IF NOT EXISTS BOOKTICKET (
   BT_ID int PRIMARY KEY,
-  Movie_id int,
-  Cinema_id int,
-  Screen_id int,
+  Movie_id int NOT NULL,
+  Cinema_id int NOT NULL,
+  Screen_id int NOT NULL,
   SeatNum int NOT NULL,
   FOREIGN KEY(Movie_id) REFERENCES MOVIES(Movie_id),
-  FOREIGN KEY(Cinema_id) REFERENCES CINEMA(Cinema_id),
-  FOREIGN KEY(Screen_id) REFERENCES SCREENING(Screen_id)
+  FOREIGN KEY(Cinema_id) REFERENCES CINEMA(Cinema_id)
 );
 ```
 
@@ -58,7 +57,7 @@ CREATE TABLE IF NOT EXISTS BOOKTICKET (
 ```sql
 CREATE TABLE IF NOT EXISTS CINEMA (
   Cinema_id int PRIMARY KEY,
-  City_id int,
+  City_id int NOT NULL,
   Cinema_name varchar(255) NOT NULL,
   FOREIGN KEY(City_id) REFERENCES CITY(City_id)
 );
@@ -84,9 +83,9 @@ CREATE TABLE IF NOT EXISTS MOVIES (
 ### Screening Table
 ```sql
 CREATE TABLE IF NOT EXISTS SCREENING (
-  Movie_id INT,
-  Cinema_id INT,
-  Screen_id INT PRIMARY KEY,
+  Movie_id INT NOT NULL,
+  Cinema_id INT NOT NULL,
+  Screen_id INT NOT NULL,
   Screen_time VARCHAR(13) NOT NULL,
   FOREIGN KEY(Movie_id) REFERENCES MOVIES(Movie_id),
   FOREIGN KEY(Cinema_id) REFERENCES CINEMA(Cinema_id)

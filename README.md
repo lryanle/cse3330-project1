@@ -128,7 +128,7 @@ WHERE CITY.City_id = CINEMA.City_id AND
       CITY.City_name = "'Arlington'";
 ```
 
-### 2. Select all cinemas that are showing a <u>particular movie</u>(Gladiator)
+### 2. Select all cinemas that are showing a <u>particular movie</u> (Gladiator)
 ```sql
 SELECT DISTINCT CINEMA.Cinema_name, MOVIES.Movie_title
 FROM CINEMA, SCREENING, MOVIES 
@@ -137,7 +137,7 @@ WHERE CINEMA.Cinema_id = SCREENING.Cinema_id AND
       MOVIES.Movie_title = "'Gladiator'";
 ```
 
-### 3. Select the seats that are booked in all cinemas for a <u>particular movie</u>(Gladiator)
+### 3. Select the seats that are booked in all cinemas for a <u>particular movie</u> (Gladiator)
 ```sql
 SELECT BOOKTICKET.SeatNum
 FROM BOOKTICKET, MOVIES
@@ -145,7 +145,7 @@ WHERE MOVIES.Movie_id = BOOKTICKET.Movie_id AND
       MOVIES.Movie_title = "'Gladiator'";
 ```
 
-### 4. Select showing times given a <u>specific cinema</u>(Cinemaprism) and <u>movie</u>(Forrest Gump)
+### 4. Select showing times given a <u>specific cinema</u> (Cinemaprism) and <u>movie</u> (Forrest Gump)
 ```sql
 SELECT SCREENING.Screen_time 
 FROM SCREENING, MOVIES, CINEMA
@@ -155,18 +155,19 @@ WHERE SCREENING.Cinema_id = CINEMA.Cinema_id AND
       MOVIES.Movie_title = "'Forrest Gump'";
 ```
 
-### 5. Select seats available given a <u>movie</u>(Gladiator) and <u>session time</u>(2 pm - 4 pm)
+### 5. Select seats available given a <u>movie</u> (Gladiator) and <u>session time</u> (2 pm - 4 pm)
+Assuming that we need to return the number of seats available from all theatres, with a 10 seat capacity per screening
 ```sql
 SELECT 10-COUNT(BOOKTICKET.SeatNum)
 FROM BOOKTICKET, SCREENING, MOVIES
 WHERE BOOKTICKET.Movie_id = SCREENING.Movie_id AND
-      BOOKTICKET.Screen_id = SCREENING.Screen_id AND
       SCREENING.Movie_id = MOVIES.Movie_id AND
+      BOOKTICKET.Screen_id = SCREENING.Screen_id AND
       MOVIES.Movie_title = "'Gladiator'" AND
       SCREENING.Screen_time = "'2 pm - 4 pm'";
 ```
 
-### 6. Select the cinema, movie title and times given a <u>reservation number</u>(13)
+### 6. Select the cinema, movie title and times given a <u>reservation number</u> (13)
 ```sql
 SELECT CINEMA.Cinema_name, MOVIES.Movie_title, SCREENING.Screen_time
 FROM CINEMA, MOVIES, SCREENING, BOOKTICKET
@@ -187,12 +188,22 @@ WHERE MOVIES.Movie_id = SCREENING.Movie_id AND
       CINEMA.City_id = CITY.City_id;
 ```
 
-### 8. Select movie title and session times with no seats available given a <u>session time</u>(2 pm - 4 pm)
+### 8. Select movie title and session times with no seats available given a <u>session time</u> (2 pm - 4 pm)
 ```sql
+-- SELECT MOVIES.Movie_title, SCREENING.Screen_time, COUNT(BOOKTICKET.SeatNum)
+-- FROM MOVIES, SCREENING, BOOKTICKET
+-- WHERE MOVIES.Movie_id = SCREENING.Movie_id AND
+--       SCREENING.Movie_id = BOOKTICKET.Movie_id AND
+--       SCREENING.Screen_id = BOOKTICKET.Screen_id AND
+--       SCREENING.Screen_time = "'2 pm - 4 pm'"
 SELECT MOVIES.Movie_title, SCREENING.Screen_time
-FROM MOVIES, SCREENING
-WHERE 
+FROM BOOKTICKET, SCREENING, MOVIES
+WHERE BOOKTICKET.Movie_id = SCREENING.Movie_id AND
+      SCREENING.Movie_id = MOVIES.Movie_id AND
+      BOOKTICKET.Screen_id = SCREENING.Screen_id AND
+      SCREENING.Screen_time = "'2 pm - 4 pm'";
 ```
+
 ## Contributors
 - [Ryan Lahlou](https://github.com/lryanle)
 - [Seongjoo Park](https://github.com/paulpark97)

@@ -24,13 +24,13 @@ tickets.
     - [7. Revert output mode back to table](#7-revert-output-mode-back-to-table)
   - [SQL SELECT Statements](#sql-select-statements)
     - [1. Select the movies that are released within a particular city (Arlington)](#1-select-the-movies-that-are-released-within-a-particular-city-arlington)
-    - [2. Select all cinemas that are showing a particular movie(Gladiator)](#2-select-all-cinemas-that-are-showing-a-particular-moviegladiator)
-    - [3. Select the seats that are booked in all cinemas for a particular movie(Gladiator)](#3-select-the-seats-that-are-booked-in-all-cinemas-for-a-particular-moviegladiator)
-    - [4. Select showing times given a specific cinema(Cinemaprism) and movie(Forrest Gump)](#4-select-showing-times-given-a-specific-cinemacinemaprism-and-movieforrest-gump)
-    - [5. Select seats available given a movie(Gladiator) and session time(2 pm - 4 pm)](#5-select-seats-available-given-a-moviegladiator-and-session-time2-pm---4-pm)
-    - [6. Select the cinema, movie title and times given a reservation number(13)](#6-select-the-cinema-movie-title-and-times-given-a-reservation-number13)
+    - [2. Select all cinemas that are showing a particular movie (Gladiator)](#2-select-all-cinemas-that-are-showing-a-particular-movie-gladiator)
+    - [3. Select the seats that are booked in all cinemas for a particular movie (Gladiator)](#3-select-the-seats-that-are-booked-in-all-cinemas-for-a-particular-movie-gladiator)
+    - [4. Select showing times given a specific cinema (Cinemaprism) and movie (Forrest Gump)](#4-select-showing-times-given-a-specific-cinema-cinemaprism-and-movie-forrest-gump)
+    - [5. Select seats available given a movie (Gladiator) and session time (2 pm - 4 pm)](#5-select-seats-available-given-a-movie-gladiator-and-session-time-2-pm---4-pm)
+    - [6. Select the cinema, movie title and times given a reservation number (13)](#6-select-the-cinema-movie-title-and-times-given-a-reservation-number-13)
     - [7. Select movie name, movie time, city, and cinema name](#7-select-movie-name-movie-time-city-and-cinema-name)
-    - [8. Select movie title and session times with no seats available given a session time(2 pm - 4 pm)](#8-select-movie-title-and-session-times-with-no-seats-available-given-a-session-time2-pm---4-pm)
+    - [8. Select movie title and session times with no seats available given a session time (2 pm - 4 pm)](#8-select-movie-title-and-session-times-with-no-seats-available-given-a-session-time-2-pm---4-pm)
   - [Contributors](#contributors)
 
 
@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS SCREENING (
   Cinema_id INT NOT NULL,
   Screen_id INT NOT NULL,
   Screen_time VARCHAR(13) NOT NULL,
+  PRIMARY KEY(Movie_id, Cinema_id, Screen_id),
   FOREIGN KEY(Movie_id) REFERENCES MOVIES(Movie_id),
   FOREIGN KEY(Cinema_id) REFERENCES CINEMA(Cinema_id)
 );
@@ -119,7 +120,7 @@ To import data, we first change the sqlite output mode to csv. Then we import th
 ## SQL SELECT Statements
 ### 1. Select the movies that are released within a <u>particular city</u> (Arlington)
 ```sql
-SELECT MOVIES.Movie_title
+SELECT DISTINCT MOVIES.Movie_title
 FROM MOVIES, CITY, CINEMA, SCREENING
 WHERE CITY.City_id = CINEMA.City_id AND
       CINEMA.Cinema_id = SCREENING.Cinema_id AND

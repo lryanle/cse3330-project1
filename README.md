@@ -35,7 +35,7 @@ tickets.
 
 
 ## ER Diagram
-![ER Diagram](./ER_Diagram_updated.png)
+![ER Diagram](./ER_Diagram3.0.png)
 
 
 ## SQL Create Statements
@@ -154,16 +154,14 @@ WHERE SCREENING.Cinema_id = CINEMA.Cinema_id AND
       MOVIES.Movie_title = "'Forrest Gump'";
 ```
 
-### 5. Select seats available given a <u>movie</u> (Gladiator) and <u>session time</u> (2 pm - 4 pm)
-Assuming that we need to return the number of seats available from all theatres, with a 10 seat capacity per screening
+### 5. Select movie title and seat numbers that are reserved given a <u>specific cinema</u> (Fuze Cinema)
 ```sql
-SELECT 10-COUNT(BOOKTICKET.SeatNum)
-FROM BOOKTICKET, SCREENING, MOVIES
-WHERE BOOKTICKET.Movie_id = SCREENING.Movie_id AND
-      SCREENING.Movie_id = MOVIES.Movie_id AND
-      BOOKTICKET.Screen_id = SCREENING.Screen_id AND
-      MOVIES.Movie_title = "'Gladiator'" AND
-      SCREENING.Screen_time = "'2 pm - 4 pm'";
+SELECT MOVIES.Movie_title, BOOKTICKET.SeatNum
+FROM MOVIES, BOOKTICKET, CINEMA
+WHERE Cinema.Cinema_name="'Fuze Cinema'" AND
+      BOOKTICKET.Cinema_id=CINEMA.Cinema_id AND
+      BOOKTICKET.Movie_id=MOVIES.Movie_id
+ORDER BY Movie_title ASC;
 ```
 
 ### 6. Select the cinema, movie title and times given a <u>reservation number</u> (13)
@@ -185,22 +183,6 @@ FROM MOVIES, SCREENING, CITY, CINEMA
 WHERE MOVIES.Movie_id = SCREENING.Movie_id AND
       SCREENING.Cinema_id = CINEMA.Cinema_id AND
       CINEMA.City_id = CITY.City_id;
-```
-
-### 8. Select movie title and session times with no seats available given a <u>session time</u> (2 pm - 4 pm)
-```sql
--- SELECT MOVIES.Movie_title, SCREENING.Screen_time, COUNT(BOOKTICKET.SeatNum)
--- FROM MOVIES, SCREENING, BOOKTICKET
--- WHERE MOVIES.Movie_id = SCREENING.Movie_id AND
---       SCREENING.Movie_id = BOOKTICKET.Movie_id AND
---       SCREENING.Screen_id = BOOKTICKET.Screen_id AND
---       SCREENING.Screen_time = "'2 pm - 4 pm'"
-SELECT MOVIES.Movie_title, SCREENING.Screen_time
-FROM BOOKTICKET, SCREENING, MOVIES
-WHERE BOOKTICKET.Movie_id = SCREENING.Movie_id AND
-      SCREENING.Movie_id = MOVIES.Movie_id AND
-      BOOKTICKET.Screen_id = SCREENING.Screen_id AND
-      SCREENING.Screen_time = "'2 pm - 4 pm'";
 ```
 
 ## Contributors
